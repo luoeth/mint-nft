@@ -1,31 +1,33 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
-
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract MyToken is ERC721 {
     uint256 public totalMints = 0;
-
     uint256 public mintPrice = 1 ether;
-    uint256 public maxSupply = 50;
-    uint256 public maxPerWallet = 5;
-    string public URI = "https://bafybeifqmgyfy4by3gpms5sdv3ft3knccmjsqxfqquuxemohtwfm7y7nwa.ipfs.dweb.link/metadata.json";
+    uint256 public maxSupply = 10000;
+    uint256 public maxPerWallet = 100;
     mapping(address => uint256) public walletMints;
+    mapping(uint256 => bool) public mintedIds; 
 
     constructor() ERC721("MyToken", "MTK") {}
 
-    function safeMint(address to) internal {
-        uint256 tokenId = totalMints;
-        totalMints++;
-
+    function safeMint(address to, uint256 tokenId) internal {
         _safeMint(to, tokenId);
     }
 
-    function mintToken(uint256 quantity_) public payable {
-        require(quantity_ * mintPrice == msg.value, "wrong amount sent");
-        require(walletMints[msg.sender] + quantity_ <= maxPerWallet, "mints per wallet exceeded");
+    function mintToken() public payable {
+        require(msg.value == mintPrice, "wrong amount sent");
+        require(walletMints[msg.sender] + 1 <= maxPerWallet, "mints per wallet exceeded");
+        require(totalMints < maxSupply, "max supply reached");
 
-        walletMints[msg.sender] += quantity_;
-        safeMint(msg.sender);
+        uint256 newTokenId = totalMints;
+        require(!mintedIds[newTokenId], "token ID already minted");
+
+        walletMints[msg.sender] += 1;
+        mintedIds[newTokenId] = true;
+        safeMint(msg.sender, newTokenId);
+        totalMints++;
     }
 
     function getMyWalletMints() public view returns (uint256) {

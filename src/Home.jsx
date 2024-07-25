@@ -1,51 +1,47 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
+import MyToken from '/artifacts/contracts/MyNFT.sol/MyToken.json';
 import deployedContract from './deployedContract.json'; // 假設該文件在 src 目錄中
 
+
 const Home = () => {
-    const [provider, setProvider] = useState(null);
-    const [signer, setSigner] = useState(null);
-    const [contract, setContract] = useState(null);
-
+    const [mintedTokens, setMintedTokens] = useState([]);
+    const [mintCount, setMintCount] = useState(0);
     const contractAddress = deployedContract.address;
-    const contractABI = deployedContract.abi;
 
-    const connectWallet = async () => {
-        if (window.ethereum) {
-            const newProvider = new ethers.providers.Web3Provider(window.ethereum);
-            const newSigner = newProvider.getSigner();
-            setProvider(newProvider);
-            setSigner(newSigner);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, MyToken.abi, signer);
 
-            const newContract = new ethers.Contract(contractAddress, contractABI, newSigner);
-            setContract(newContract);
-        } else {
-            console.log('Please install MetaMask');
-        }
-    };
-
-    const mintToken = async () => {
-        if (contract) {
-            try {
-                const tx = await contract.mintToken(1, { value: ethers.utils.parseEther("1") });
-                await tx.wait();
-                console.log('Mint successful');
-            } catch (error) {
-                console.log('Error minting token:', error);
-            }
-        } else {
-            console.log('Contract not connected');
+    const mintNFT = async () => {
+        try {
+            const tx = await contract.mintToken({ value: ethers.utils.parseEther("1.0") });
+            await tx.wait();
+            
+            const newMintCount = mintCount + 1;
+            setMintCount(newMintCount);
+            setMintedTokens([...mintedTokens, newMintCount]);
+        } catch (err) {
+            console.error("Minting error: ", err);
         }
     };
 
     return (
         <div>
-            <button onClick={connectWallet}>
-                Connect Wallet
-            </button>
-            <button onClick={mintToken}>
-                Mint
-            </button>
+            <h1>Mint your NFT</h1>
+            <button onClick={mintNFT}>Mint</button>
+            <div>
+                <h2>Minted NFTs:</h2>
+                <ul>
+                    {mintedTokens.map((tokenId, index) => (
+                        <li key={index}>
+                            NFT ID: {tokenId} 
+                            <br />
+                            <img src={`img/0 (${tokenId}).jpg`} alt={`NFT ${tokenId}`} width="200" />
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
