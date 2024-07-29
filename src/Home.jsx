@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import MyToken from '/artifacts/contracts/MyNFT.sol/MyToken.json';
-import deployedContract from './deployedContract.json'; // 假設該文件在 src 目錄中
+import deployedContract from './deployedContract.json';
 
 
 const Home = () => {
