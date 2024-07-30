@@ -14,12 +14,6 @@
 
 5. 部署腳本：
    > yarn hardhat run src\deploy.js --network localhost
-> [!部署畫面會像是]
-> yarn run v1.22.22.
-> $ C:\Users\Luo\Desktop\myapp\node_modules\.bin\hardhat run src\deploy.js --network localhost.
-> MyToken deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3.
-> Done in 2.61s.
-
 > [!NOTE]
 > yarn run v1.22.22.
 > $ C:\Users\Luo\Desktop\myapp\node_modules\.bin\hardhat run src\deploy.js --network localhost.
