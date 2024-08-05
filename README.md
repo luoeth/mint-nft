@@ -27,6 +27,14 @@
 > ➜  press h + enter to show help
 
 # [Metamask](https://metamask.io/)錢包
-1. add a network  
+# 1. add a network    
+![](https://github.com/luoeth/mint-nft-token/blob/main/add%20a%20network.png)
 
+# 2.匯入帳號(使用yarn hardhat node後提供的帳號做匯入)  
+![](https://github.com/luoeth/mint-nft-token/blob/main/%E5%8C%AF%E5%85%A5%E5%B8%B3%E8%99%9F.png)  
 
+# 3.與網站進行連結，點擊mint
+![](https://github.com/luoeth/mint-nft-token/blob/main/%E9%BB%9E%E6%93%8Amint.png)  
+
+# 4.First NFT  
+![](https://github.com/luoeth/mint-nft-token/blob/main/first%20nft.png)
