@@ -26,6 +26,9 @@
 > ➜  Network: use --host to expose  
 > ➜  press h + enter to show help
 
+7. 將您的圖片放置myapp\public\img  
+![](https://github.com/luoeth/mint-nft/blob/main/%E5%9C%96%E7%89%87%E8%B7%AF%E5%BE%91.png)
+
 # [Metamask](https://metamask.io/)錢包
 # 1. add a network    
 ![](https://github.com/luoeth/mint-nft-token/blob/main/add%20a%20network.png)
